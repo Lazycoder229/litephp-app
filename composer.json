@@ -1,0 +1,17 @@
+{
+    "name": "litephp/app",
+    "description": "A starter application built on LitePHP",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "litephp/core": "^1.0.0"
+    },
+    "config": {
+        "process-timeout": 0
+    },
+    "scripts": {
+        "start": "php -S localhost:3000"
+    }
+}

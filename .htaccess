@@ -1,0 +1,9 @@
+
+
+RewriteEngine On
+# Block direct access to sensitive dirs
+RewriteRule ^(Core|config|storage|Bootstrap|app|autoload\.php) - [F,L]
+# Front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
