@@ -1,257 +1,408 @@
-# LitePHP
+<div align="center">
 
-LitePHP is a lightweight, MVC-based PHP framework designed for simplicity, performance, and zero runtime dependencies.
+```
+    __    _ __       ____  __  ____
+   / /   (_) /____  / __ \/ / / / /
+  / /   / / __/ _ \/ /_/ / /_/ / /
+ / /___/ / /_/  __/ ____/ __  / /___
+/_____/_/\__/\___/_/   /_/ /_/_____/
+```
+
+**A lightweight, MVC-based PHP framework built for simplicity and speed.**
+
+[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
+[![Composer](https://img.shields.io/badge/Composer-required-885630?style=flat-square&logo=composer&logoColor=white)](https://getcomposer.org)
+[![Vite](https://img.shields.io/badge/Vite-supported-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![License](https://img.shields.io/badge/License-MIT-22c55e?style=flat-square)](#license)
+
+</div>
+
+---
+
+## Requirements
+
+| Requirement | Version |
+|---|---|
+| PHP | 8.1 or higher |
+| Composer | Latest |
+| Node.js | 18+ *(for Vite)* |
+| Web Server | Apache, Nginx, or PHP built-in |
+| Database | MySQL / MariaDB *(optional)* |
 
 ---
 
-## Introduction
+## Quick Start
 
-LitePHP provides a clean and minimal foundation for building modern PHP applications. It follows a structured architecture that promotes separation of concerns, making development maintainable and scalable.
+### 1. Create a new project
+
+```bash
+composer create-project litephp/app my-app
+cd my-app
+```
+
+### 2. Set up environment
+
+```bash
+php lite env:init
+php lite key:generate
+php lite jwt:secret
+```
+
+### 3. Install frontend dependencies & start Vite
+
+```bash
+npm install
+npm run dev
+```
+
+### 4. Start the PHP development server
+
+```bash
+php -S localhost:3000
+or
+npm run dev        # to run both the vite server and the lite app
+```
+
+> Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## System Requirements
+## Vite Setup
 
-- PHP 8.1 or higher  
-- Composer  
-- Web server (Apache, Nginx, or PHP built-in server)  
-- MySQL or MariaDB (optional)  
+LitePHP ships with first-class Vite support via the `@vite()` directive.
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Available commands
+
+```bash
+npm run dev      # Start Vite dev server with HMR
+npm run build    # Build assets for production
+```
+
+### Usage in Blade views
+
+```blade
+{{-- In your layout file --}}
+<? vite(['resources/css/app.css', 'resources/js/app.js'])?>
+```
+
+### Asset structure
+
+```
+resources/
+├── css/
+│   └── app.css       ← main stylesheet (Tailwind goes here)
+└── js/
+    └── app.js        ← main JavaScript entry point
+
+public/
+└── build/            ← compiled output (auto-generated, gitignored)
+```
+
+> **Note:** Run `npm run build` before deploying to production.
 
 ---
 
-## Installation
-
-Create a new LitePHP project using Composer:
-
-composer create-project litephp/app my-app  
-cd my-app  
-
-Initialize environment configuration:
-
-cp .env.example .env  
-
-Start the development server:
-
-php -S localhost:3000  
-
----
 ## Directory Structure
 
----
-
-app/
-    Controllers/   - Handles HTTP requests and returns responses
-    Helpers/       - Custom helper functions specific to the application
-    Middleware/    - Request filters (authentication, security, etc.)
-        Api/       - Middleware for API routes
-        Global/    - Middleware applied to all requests
-        Web/       - Middleware for web routes
-    Models/        - Database models and ORM logic
-    Routes/        - Application route definitions
-    Services/      - Business logic and service classes
-    views/         - Application templates (UI layer)
-        layouts/    - Shared layout templates
-        partials/   - Shared partial templates
-        errors/    - Error pages (403, 404, 500)
-        layout/    - Shared layout templates
-    home.php       - Application entry point
-
-
-Bootstrap/         - Application bootstrapping and initialization
-config/            - Configuration files
-storage/           - Logs, cache, sessions, and runtime data
-
-autoload.php       - Registers application namespaces and autoloading
-index.php          - Application entry point
-lite               - CLI tool for framework commands
-.env               - Environment configuration file
-composer.json      - Project dependencies and metadata
-
+```
+my-app/
+├── app/
+│   ├── Controllers/        — HTTP request handlers
+│   ├── Helpers/            — Custom helper functions
+│   ├── Middleware/
+│   │   ├── Api/            — API route middleware
+│   │   ├── Global/         — Runs on every request
+│   │   └── Web/            — Web route middleware
+│   ├── Models/             — Database models & ORM
+│   ├── Routes/
+│   │   └── web.php         — Route definitions
+│   ├── Services/           — Business logic
+│   └── views/
+│       ├── layouts/        — Shared layout templates
+│       ├── partials/       — Reusable partials
+│       └── errors/         — 403, 404, 500 error pages
+│
+├── Bootstrap/              — Application bootstrap sequence
+├── config/                 — Configuration files
+├── resources/
+│   ├── css/                — Source stylesheets
+│   └── js/                 — Source JavaScript
+├── storage/                — Logs, cache, sessions
+├── public/                 — Web root (point server here)
+│   └── build/              — Vite compiled assets
+│
+├── .env                    — Environment variables
+├── .env.example            — Environment template
+├── autoload.php            — Namespace & autoloading
+├── composer.json           — PHP dependencies
+├── package.json            — Node dependencies
+├── vite.config.js          — Vite configuration
+└── lite                    — CLI tool
+```
 
 ---
 
 ## Configuration
 
-All configuration is managed through the `.env` file.
+All configuration is managed through `.env`:
 
-- Environment variables control application behavior  
-- Configuration files are stored in `config/`  
-- Values are accessible globally throughout the application  
+```env
+===================
+APP CONFIGURATION
+===================
+APP_NAME=Lite
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:3000
 
----
+===================
+DATABASE CONFIGURATION
+===================
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=
+DB_USERNAME=root
+DB_PASSWORD=
 
-## Application Lifecycle
+===================
+SESSION CONFIGURATION
+===================
+SESSION_NAME=lite_session
+SESSION_LIFETIME=120
+SESSION_DOMAIN=
+SESSION_SAMESITE=Lax
 
-Every request follows this lifecycle:
+===================
+MAIL CONFIGURATION
+===================
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=hello@example.com
+MAIL_FROM_NAME=Lite
 
-1. Bootstrapping the framework  
-2. Loading environment variables  
-3. Loading configuration files  
-4. Initializing the service container  
-5. Processing middleware  
-6. Resolving routes  
-7. Executing controllers  
-8. Returning a response  
+================================================================
+APP KEY AND JWT SECRET HERE (auto injected once you run the cli)
+================================================================
+```
+
+Config files live in `config/` and are accessible via:
+
+```php
+config('app.name');       // reads config/app.php → 'name' key
+env('APP_DEBUG', false);  // reads directly from .env
+```
 
 ---
 
 ## Routing
 
-Routes define how your application responds to HTTP requests.
+Define routes in `app/Routes/web.php`:
 
-Features:
+```php
+use App\Controllers\HomeController;
+use Core\Facades\Route;
 
-- HTTP method routing  
-- Route parameters  
-- Named routes  
-- Middleware support  
-- Route grouping  
+// Basic routes
+Route::get('/',       [HomeController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 
-All routes are defined in:
+// Route groups
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/profile',   [UserController::class, 'show']);
+});
 
-app/Routes/web.php  
+// API routes
+Route::group(['prefix' => '/api', 'middleware' => ['api']], function () {
+    Route::get('/users', [UserController::class, 'index']);
+});
+```
 
 ---
 
 ## Controllers
 
-Controllers handle incoming requests and return responses.
+```php
+<?php
 
-Responsibilities:
+namespace App\Controllers;
 
-- Process request data  
-- Validate input  
-- Interact with models and services  
-- Return views, JSON, or redirects  
+use Core\Controller;
 
----
-
-## Models & Database
-
-Models represent database tables and handle data operations.
-
-Capabilities:
-
-- ORM-based queries  
-- Relationships  
-- Transactions  
-- Pagination  
+class HomeController extends Controller
+{
+    public function index(): never
+    {
+        view('home', [
+            'title' => 'Welcome',
+        ]);
+    }
+}
+```
 
 ---
 
-## Authentication
+## Views & Layouts
 
-LitePHP includes built-in authentication features:
+**Layout** — `app/views/layout/app.php`:
 
-- Session-based authentication  
-- JWT-based authentication  
-- User session handling  
+```blade
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@yield('title', 'LitePHP')</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+    @yield('content')
+</body>
+</html>
+```
 
-Configuration file:
+**View** — `app/views/home.php`:
 
-config/auth.php  
+```blade
+@extends('layout.app')
+
+@section('title') Home @endsection
+
+@section('content')
+    <h1>Hello, World!</h1>
+@endsection
+```
 
 ---
 
 ## Middleware
 
-Middleware filters incoming HTTP requests.
+Middleware is auto-discovered from `app/Middleware/` via the `#[RegisterMiddleware]` attribute.
 
-### Groups
+```php
+#[RegisterMiddleware(group: 'web', alias: 'auth')]
+class AuthMiddleware implements Middleware
+{
+    public function handle(Request $request, Response $response, callable $next): mixed
+    {
+        if (!Session::isLoggedIn()) {
+            return $response->redirect('/login');
+        }
 
-- global — runs on every request  
-- web — for web routes  
-- api — for API routes  
+        return $next($request, $response);
+    }
+}
+```
 
-### Responsibilities
+### Built-in middleware (auto-registered)
 
-- Authentication  
-- CSRF protection  
-- Rate limiting  
-- Logging  
-- CORS handling  
+| Middleware | Scope | Description |
+|---|---|---|
+| `SecurityHeadersMiddleware` | Global | XSS, clickjacking, MIME-sniffing protection |
+| `VerifyCsrfToken` | Web group | CSRF token validation on all forms |
+| `ThrottleMiddleware` | Per-route | Rate limiting via `throttle:attempts,minutes` |
+| `CorsMiddleware` | Manual | Cross-origin resource sharing |
 
----
+### CSRF in forms
 
-## Console (CLI)
-
-The `lite` CLI tool provides development utilities:
-
-- Code generation  
-- Database migrations  
-- Seeding  
-- Cache management  
-- Queue processing  
-
----
-
-## Views
-
-Views are located in:
-
-app/views/  
-
-Features:
-
-- Layouts and templates  
-- Partial includes  
-- Safe output rendering  
-- Dynamic data binding  
+```blade
+<form method="POST" action="/submit">
+    {!! csrf_field() !!}
+    ...
+</form>
+```
 
 ---
 
-## Helper Functions
+## Authentication
 
-Global helpers are available for:
+LitePHP includes session-based and JWT authentication out of the box.
 
-- Paths and directories  
-- Configuration access  
-- Request and response handling  
-- Sessions and authentication  
-- Security utilities  
-- String and date operations  
-- Caching and logging  
+Configure in `config/auth.php` or via `.env`:
 
----
+```env
+AUTH_MODEL=App\Models\User
+```
 
-## Error Handling
+```php
+// Check login state
+Session::isLoggedIn();
 
-Custom error pages:
+// Get current user
+Session::user();
 
-- 403 — Forbidden  
-- 404 — Not Found  
-- 500 — Server Error  
-
-Location:
-
-app/views/errors/  
+// Log out
+Session::logout();
+```
 
 ---
 
-## Deployment
+## CLI — `lite`
 
-Before deploying:
+The `lite` CLI provides development utilities:
 
-- Set APP_ENV=production  
-- Set APP_DEBUG=false  
-- Configure application keys  
-- Set correct APP_URL  
-- Restrict CORS origins  
-- Cache routes  
-- Ensure storage is writable  
-- Secure `.env` file  
-- Run migrations  
+```bash
+php lite make:controller UserController    # Generate a controller
+php lite make:view home                   # Generate a view
+php lite make:resource User               # Generate a resource
+php lite make:model User                   # Generate a model
+php lite make:middleware AuthMiddleware    # Generate middleware
+php lite migrate                           # Run database migrations
+php lite migrate:rollback                  # Rollback last migration
+php lite db:seed                           # Run database seeders
+php lite cache:clear                       # Clear application cache
+php lite route:cache                       # Cache route definitions
+php lite route:clear                       # Clear route cache
+php lite env:init                          # Initialize .env            
+php lite key:generate                      # Generate app keys
+php lite jwt:secret                        # Generate JWT secret
+```
+
+---
+
+## Error Pages
+
+Custom error pages are located in `app/views/errors/`:
+
+| File | Status |
+|---|---|
+| `403.php` | Forbidden |
+| `404.php` | Not Found |
+| `500.php` | Server Error |
+
+---
+
+## Deployment Checklist
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+```
+
+- [ ] Set `APP_ENV=production` and `APP_DEBUG=false`
+- [ ] Set correct `APP_URL`
+- [ ] Run `npm run build` to compile assets
+- [ ] Run database migrations
+- [ ] Cache routes: `php lite route:cache`
+- [ ] Ensure `storage/` is writable
+- [ ] Restrict CORS origins in `config/cors.php`
+- [ ] Secure `.env` — never commit to version control
+- [ ] Point web server root to `public/`
 
 ---
 
 ## License
 
-This project is open-sourced software licensed under the MIT License.
+LitePHP is open-sourced software licensed under the [MIT License](LICENSE).
 
-
-
-
-
-
-nabago, jwt,secret sa comman sonolse
-nabago din yun route cache
+---
