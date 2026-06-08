@@ -1,13 +1,5 @@
 <div align="center">
 
-```
-    __    _ __       ____  __  ____
-   / /   (_) /____  / __ \/ / / / /
-  / /   / / __/ _ \/ /_/ / /_/ / /
- / /___/ / /_/  __/ ____/ __  / /___
-/_____/_/\__/\___/_/   /_/ /_/_____/
-```
-
 **A lightweight, MVC-based PHP framework built for simplicity and speed.**
 
 [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
