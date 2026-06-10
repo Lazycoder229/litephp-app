@@ -119,7 +119,7 @@ if ($isProduction && $router->bootFromCache($cache)) {
         $router->cache($cache);
     }
 }
-
+$container->bind('throttle', fn() => new \Core\Middleware\ThrottleMiddleware());
 // ── 12. Kernel + Middleware ───────────────────────────────────────────────────
 // autoDiscover() scans app/Middleware and registers classes that carry
 // a #[RegisterMiddleware] attribute — no manual registration needed.

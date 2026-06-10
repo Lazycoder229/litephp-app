@@ -18,5 +18,3 @@ storage/uploads/*
 # Keep folder structure
 !storage/**/.gitkeep
 
-# Composer
-composer.lock

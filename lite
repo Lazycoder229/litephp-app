@@ -5,7 +5,6 @@ define('APP_BASE_PATH', __DIR__);
 define('BASE_PATH', __DIR__);
 require_once __DIR__ . '/vendor/autoload.php';
 
-// App\ namespace
 spl_autoload_register(function (string $class): void {
     $prefix  = 'App\\';
     $baseDir = __DIR__ . '/app/';
@@ -15,12 +14,12 @@ spl_autoload_register(function (string $class): void {
     if (file_exists($file)) require_once $file;
 });
 
-// Full app boot
 Core\Config\Env::load(__DIR__ . '/.env');
 Core\Config\Config::load(__DIR__ . '/config');
 
 $app = require __DIR__ . '/Bootstrap/container.php';
-$GLOBALS['container'] = $app;
+$GLOBALS['container'] = $app;  // keep for any legacy code that reads this
+app($app);                      // ← THIS is what was missing
 
 $kernel = new Core\Console\Kernel();
 $kernel->handle($argv);
