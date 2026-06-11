@@ -6,7 +6,7 @@ node_modules/
 .env
 
 # Generated files
-public/build/
+build/
 public/hot
 
 # Storage (runtime files)
@@ -18,3 +18,5 @@ storage/uploads/*
 # Keep folder structure
 !storage/**/.gitkeep
 
+# OS files
+.DS_Store

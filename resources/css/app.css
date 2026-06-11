@@ -1,2 +1,10 @@
 @import "tailwindcss";
 
+body {
+  
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+main {
+  transition: opacity 0.2s ease;
+}
