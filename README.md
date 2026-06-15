@@ -91,9 +91,9 @@ resources/
 │   └── app.css       ← main stylesheet (Tailwind goes here)
 └── js/
     └── app.js        ← main JavaScript entry point
-
+build/            ← compiled output (auto-generated, gitignored)
 public/
-└── build/            ← compiled output (auto-generated, gitignored)
+└── 
 ```
 
 > **Note:** Run `npm run build` before deploying to production.
@@ -127,7 +127,7 @@ my-app/
 │   └── js/                 — Source JavaScript
 ├── storage/                — Logs, cache, sessions
 ├── public/                 — Web root (point server here)
-│   └── build/              — Vite compiled assets
+│ build/              — Vite compiled assets
 │
 ├── .env                    — Environment variables
 ├── .env.example            — Environment template

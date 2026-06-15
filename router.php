@@ -40,6 +40,6 @@ if (
 ) {
     return false;
 }
-
+####
 // Everything else → app entry point (handles its own routing)
 require __DIR__ . '/index.php';

@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe62073a00ef5cf6845f405d9c2b620a",
+    "content-hash": "8f23315a0dc20bd2e2d0d11d708c75cb",
     "packages": [
         {
             "name": "litephp/core",
-            "version": "v1.1.6",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lazycoder229/litephp.git",
@@ -42,7 +42,7 @@
             "description": "LitePHP - A lightweight PHP framework",
             "support": {
                 "issues": "https://github.com/Lazycoder229/litephp/issues",
-                "source": "https://github.com/Lazycoder229/litephp/tree/v1.1.6"
+                "source": "https://github.com/Lazycoder229/litephp/tree/v1.0.0"
             },
             "time": "2026-06-12T01:06:37+00:00"
         }
