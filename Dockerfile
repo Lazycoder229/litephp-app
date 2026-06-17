@@ -6,10 +6,12 @@ COPY vite.config.js ./
 COPY resources/ ./resources/
 COPY public/ ./public/
 RUN npm run build
-# Hard fail if manifest is missing — catches silent build failures
+# Hard fail if manifest missing — no more silent failures
 RUN test -f /build/public/build/.vite/manifest.json || \
     test -f /build/public/build/manifest.json || \
     (echo "❌ Vite manifest not found — build failed" && exit 1)
+# Verify the files are actually there
+RUN echo "=== Built files ===" && find /build/public/build -type f
 
 FROM php:8.3-apache
 
@@ -34,6 +36,12 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 COPY . .
 
 COPY --from=frontend-builder /build/public/build ./public/build
+
+# Confirm manifest landed in the final image
+RUN test -f /var/www/html/public/build/.vite/manifest.json || \
+    test -f /var/www/html/public/build/manifest.json || \
+    (echo "❌ Manifest missing in final image" && exit 1) && \
+    echo "✅ Manifest confirmed in final image"
 
 RUN rm -rf storage/cache/views/ && \
     mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
