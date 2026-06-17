@@ -62,7 +62,7 @@ RUN test -f /var/www/html/public/build/.vite/manifest.json || \
 RUN rm -rf storage/cache/views/ && \
     mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
     chown -R www-data:www-data /var/www/html && \
-    chmod -F 775 storage
+    chmod -R 775 storage
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
