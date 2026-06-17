@@ -3,10 +3,9 @@ set -e
 
 PORT="${PORT:-80}"
 
-# Clear view cache so stale vite() output is never served
+# Clear stale view cache on every startup
 rm -rf /var/www/html/storage/cache/views/*
 mkdir -p /var/www/html/storage/cache/views
-chown -R www-data:www-data /var/www/html/storage
 
 printenv | grep -E "^(APP_|DB_|MAIL_|CORS_|VITE_|SESSION_|VIEW_)" > /var/www/html/.env
 
