@@ -5,7 +5,7 @@ PORT="${PORT:-80}"
 
 printenv | grep -E "^(APP_|DB_|MAIL_|CORS_|VITE_)" > /var/www/html/.env
 
-# Clear at i-recreate ang view cache na may tamang permissions
+# Clear view cache at itakda ang tamang permissions
 rm -rf /var/www/html/storage/cache/views/
 mkdir -p /var/www/html/storage/cache/views/
 chown -R www-data:www-data /var/www/html/storage/
