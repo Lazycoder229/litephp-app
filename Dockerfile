@@ -27,7 +27,13 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # I-copy ang composer files para sa layer caching
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-
+# SIGURADUHIN ANG PERMISSIONS:
+# 1. Bigyan ng permission ang FrankenPHP binary
+# 2. Pwersahing gumawa ng storage/ at mga sub-folders nito para laging may lalagyan ng cache/logs
+# 3. I-set ang tamang permissions (775) sa buong storage folder
+RUN chmod +x /usr/local/bin/frankenphp && \
+    mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
+    chmod -R 775 storage
 # I-copy ang buong source code ng iyong project
 COPY . .
 
