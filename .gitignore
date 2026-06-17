@@ -1,0 +1,22 @@
+# Dependencies
+vendor/
+node_modules/
+
+# Environment
+.env
+
+# Generated files
+build/
+public/hot
+
+# Storage (runtime files)
+storage/logs/*
+storage/cache/*
+storage/framework/sessions/*
+storage/uploads/*
+
+# Keep folder structure
+!storage/**/.gitkeep
+
+# OS files
+.DS_Store

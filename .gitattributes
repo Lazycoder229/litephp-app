@@ -1,0 +1,2 @@
+# .gitattributes
+storage/ export-ignore
