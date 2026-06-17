@@ -14,7 +14,7 @@ storage/logs/*
 storage/cache/*
 storage/framework/sessions/*
 storage/uploads/*
-
+storage/cache/views/*.php
 # Keep folder structure
 !storage/**/.gitkeep
 
