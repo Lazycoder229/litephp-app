@@ -46,9 +46,10 @@ Route::get('/demo/info', [HomeController::class, 'demoInfo']);
 
 // ── Database connection test (uncomment to use) ───────────────────────────────
 // Visit: http://localhost:3000/db-test
-
+/* 
 Route::get('/db-test', function () {
     $db = app(\Core\Database::class); // resolves from container
     $db->query('SELECT 1');
     echo 'DB connected! booommm';
 });
+ */
