@@ -33,8 +33,8 @@ COPY . .
 
 COPY --from=frontend-builder /build/public/build ./public/build
 
-RUN mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
-    rm -f storage/cache/views/*.php && \
+RUN rm -rf storage/cache/views/ && \
+    mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
     chown -R www-data:www-data /var/www/html && \
     chmod -R 775 storage
 
