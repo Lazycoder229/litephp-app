@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "litephp/core": "^1.0.6"
+        "litephp/core": "^1.0.7"
     },
     "autoload": {
         "psr-4": {
