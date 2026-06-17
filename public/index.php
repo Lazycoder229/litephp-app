@@ -18,7 +18,7 @@
 
 date_default_timezone_set('Asia/Manila');
 
-define('APP_BASE_PATH', dirname(__DIR__));  // ← IDAGDAG ITO
 
-require __DIR__ . '/../../autoload.php';    // ← AYUSIN ANG SLASH
+
+require __DIR__ . '/../autoload.php';
 require __DIR__ . '/../Bootstrap/app.php';
