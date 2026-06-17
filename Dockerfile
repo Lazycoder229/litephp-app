@@ -11,44 +11,38 @@ COPY public/ ./public/
 RUN npm run build
 
 # ==========================================
-# STAGE 2: Opisyal na FrankenPHP Image (Production-Grade)
+# STAGE 2: PHP-Apache (Production-Ready)
 # ==========================================
-FROM dunglas/frankenphp:1-alpine
+FROM php:8.3-apache
 
-# Mag-install ng unzip para sa Composer at mga karaniwang PHP extensions
-RUN apk add --no-cache unzip libzip-dev && \
-    docker-php-ext-install zip
+RUN apt-get update && apt-get install -y unzip libzip-dev && \
+    docker-php-ext-install zip && \
+    a2enmod rewrite && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+        /etc/apache2/sites-available/*.conf && \
+    sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+        /etc/apache2/apache2.conf
 
-# I-copy ang Composer mula sa opisyal na image nito
+WORKDIR /var/www/html
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# I-copy ang composer files para sa layer caching
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-# SIGURADUHIN ANG PERMISSIONS:
-# 1. Bigyan ng permission ang FrankenPHP binary
-# 2. Pwersahing gumawa ng storage/ at mga sub-folders nito para laging may lalagyan ng cache/logs
-# 3. I-set ang tamang permissions (775) sa buong storage folder
-RUN chmod +x /usr/local/bin/frankenphp && \
-    mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
-    chmod -R 775 storage
-# I-copy ang buong source code ng iyong project
+
 COPY . .
 
-# I-copy ang naging produkto ng Vite build mula sa Stage 1 papuntang public/build
 COPY --from=frontend-builder /build/public/build ./public/build
 
-# SIGURADUHIN ANG PERMISSIONS:
-# 1. Bigyan ng permission ang FrankenPHP binary
-# 2. Siguraduhing may karapatan ang PHP na magsulat sa storage folder para sa cache/logs
-RUN chmod +x /usr/local/bin/frankenphp && \
+RUN mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
+    chown -R www-data:www-data /var/www/html && \
     chmod -R 775 storage
 
-# I-set ang port para sa Render (Dapat tugma sa port ng container)
-ENV PORT=8080
-EXPOSE 8080
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Ang tamang command para sa opisyal na FrankenPHP Server
-CMD ["frankenphp", "php-server", "--listen", ":8080", "--root", "public/"]
+EXPOSE 80
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
