@@ -11,7 +11,7 @@ COPY vite.config.js ./
 COPY resources/ ./resources/
 COPY public/ ./public/
 
-COPY app/Views/ ./app/Views/
+COPY app/views/ ./app/views/
 
 RUN npm run build
 
