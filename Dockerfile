@@ -5,9 +5,11 @@ RUN npm ci
 COPY vite.config.js ./
 COPY resources/ ./resources/
 COPY public/ ./public/
-RUN npm run build && \
-    echo "=== Checking manifest ===" && \
-    find /build/public/build -name "manifest.json" 2>/dev/null || echo "NO MANIFEST FOUND"
+RUN npm run build
+# Hard fail if manifest is missing — catches silent build failures
+RUN test -f /build/public/build/.vite/manifest.json || \
+    test -f /build/public/build/manifest.json || \
+    (echo "❌ Vite manifest not found — build failed" && exit 1)
 
 FROM php:8.3-apache
 
