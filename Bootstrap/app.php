@@ -46,13 +46,35 @@ require_once __DIR__ . '/../vendor/litephp/core/Core/helpers.php';
 
 // ── 3. Environment ────────────────────────────────────────────────────────────
 Core\Config\Env::load(__DIR__ . '/../.env');
-
+/**
+ * DEPLOYMENT CHECKLIST
+ *
+ * Before deploying to production:
+ *   [ ] APP_ENV=production
+ *   [ ] APP_DEBUG=false
+ *   [ ] APP_KEY is set (never empty)
+ *   [ ] APP_JWT_SECRET is set
+ *   [ ] CORS_ALLOWED_ORIGINS is restricted (no *)
+ *   [ ] Database credentials are secured
+ *   [ ] Session cookie is secure (HTTPS enabled)
+ *   [ ] Storage/ is writable
+ *   [ ] Route cache enabled (production)
+ *
+ * WARNING:
+ * Never deploy with debug or wildcard CORS enabled.
+ */
+if (env('APP_ENV') === 'production' && env('APP_DEBUG') === 'true') {
+    throw new \RuntimeException('APP_DEBUG must be false in production.');
+}
 // ── 4. Config ─────────────────────────────────────────────────────────────────
 Core\Config\Config::load(__DIR__ . '/../config');
 
 // ── 5. Cache ──────────────────────────────────────────────────────────────────
 \Core\Cache\Cache::boot();
-
+// In Bootstrap/app.php
+if (env('APP_ENV') === 'production' && env('APP_DEBUG') === 'true') {
+    throw new \RuntimeException('APP_DEBUG must be false in production.');
+}
 // ── 6. Error Handler ──────────────────────────────────────────────────────────
 Handler::register();
 

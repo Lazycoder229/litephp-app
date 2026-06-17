@@ -17,11 +17,21 @@ use Core\Config\Env;
  *            Used by url(), asset(), and redirect helpers.
  */
 return [
-    'name' => Env::get('APP_NAME', 'Lite'),
+    'name'  => Env::get('APP_NAME', 'Lite'),
 
-    'env' => Env::get('APP_ENV', 'production'),
+    'env'   => Env::get('APP_ENV', 'production'),
 
-    'debug' => Env::get('APP_DEBUG', 'false') === 'true',
+    'debug' => filter_var(
+        Env::get('APP_DEBUG', false),
+        FILTER_VALIDATE_BOOL
+    ),
 
-    'url' => Env::get('APP_URL', 'http://localhost:3000'),
+    'url'   => rtrim(
+        Env::get('APP_URL', 'http://localhost:3000'),
+        '/'
+    ),
+
+    'timezone' => Env::get('APP_TIMEZONE', 'UTC'),
+
+    'locale'   => Env::get('APP_LOCALE', 'en'),
 ];

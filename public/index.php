@@ -18,5 +18,5 @@
 
 date_default_timezone_set('Asia/Manila');
 
-require __DIR__ . '/autoload.php';
-require __DIR__ . '/Bootstrap/app.php';
+require __DIR__ . '../../autoload.php';
+require __DIR__ . '/../Bootstrap/app.php';

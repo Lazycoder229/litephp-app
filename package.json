@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "dev": "concurrently \"php -S localhost:3000\" \"vite\"",
+        "dev": "concurrently \"php -S localhost:3000 -t public\" \"vite\"",
         "build": "vite build"
     },
     "devDependencies": {

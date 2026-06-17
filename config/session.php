@@ -28,4 +28,6 @@ return [
     'lifetime' => (int) Env::get('SESSION_LIFETIME', '120'),
     'domain'   => Env::get('SESSION_DOMAIN',   ''),
     'samesite' => Env::get('SESSION_SAMESITE', 'Lax'),
+       'secure'   => (bool) Env::get('SESSION_SECURE_COOKIE', false),
+       'http_only'=> true,
 ];

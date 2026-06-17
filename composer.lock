@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f23315a0dc20bd2e2d0d11d708c75cb",
+    "content-hash": "d23d73ffb3c848fedfb34747a1d9f7f5",
     "packages": [
         {
             "name": "litephp/core",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lazycoder229/litephp.git",
-                "reference": "fdadb06dcae5b59c7057ed064e5afd323ba9e2b8"
+                "reference": "9d37cb44537b681ea781d0423b0c22bc23e39db8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lazycoder229/litephp/zipball/fdadb06dcae5b59c7057ed064e5afd323ba9e2b8",
-                "reference": "fdadb06dcae5b59c7057ed064e5afd323ba9e2b8",
+                "url": "https://api.github.com/repos/Lazycoder229/litephp/zipball/9d37cb44537b681ea781d0423b0c22bc23e39db8",
+                "reference": "9d37cb44537b681ea781d0423b0c22bc23e39db8",
                 "shasum": ""
             },
             "require": {
@@ -42,9 +42,9 @@
             "description": "LitePHP - A lightweight PHP framework",
             "support": {
                 "issues": "https://github.com/Lazycoder229/litephp/issues",
-                "source": "https://github.com/Lazycoder229/litephp/tree/v1.0.0"
+                "source": "https://github.com/Lazycoder229/litephp/tree/v1.0.1"
             },
-            "time": "2026-06-12T01:06:37+00:00"
+            "time": "2026-06-17T00:56:59+00:00"
         }
     ],
     "packages-dev": [],
