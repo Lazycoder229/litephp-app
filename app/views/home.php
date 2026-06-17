@@ -11,6 +11,7 @@
         </h1>
         <p class="mt-4 text-gray-500 text-base max-w-md">
             Your application is ready. Start building something great.
+            
         </p>
     </div>
 @endsection
