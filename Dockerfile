@@ -1,6 +1,3 @@
-# ==========================================
-# STAGE 1: Node.js para sa Vite Compilation
-# ==========================================
 FROM node:20-alpine AS frontend-builder
 WORKDIR /build
 COPY package*.json ./
@@ -8,11 +5,10 @@ RUN npm ci
 COPY vite.config.js ./
 COPY resources/ ./resources/
 COPY public/ ./public/
-RUN npm run build
+RUN npm run build && \
+    echo "=== Checking manifest ===" && \
+    find /build/public/build -name "manifest.json" 2>/dev/null || echo "NO MANIFEST FOUND"
 
-# ==========================================
-# STAGE 2: PHP-Apache (Production-Ready)
-# ==========================================
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y unzip libzip-dev && \
@@ -38,6 +34,7 @@ COPY . .
 COPY --from=frontend-builder /build/public/build ./public/build
 
 RUN mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
+    rm -f storage/cache/views/*.php && \
     chown -R www-data:www-data /var/www/html && \
     chmod -R 775 storage
 
