@@ -6,13 +6,13 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "litephp/core": "^1.0.8"
+        "litephp/core": "^1.0.0"
     },
     "autoload": {
         "psr-4": {
             "Core\\": "Core/",
             "App\\": "app/",
-            "Bootstrap\\": "Bootstrap/"
+            "Bootstrap\\": "bootstrap/"
         }
     },
     "config": {

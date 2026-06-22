@@ -34,4 +34,7 @@ return [
     'timezone' => Env::get('APP_TIMEZONE', 'UTC'),
 
     'locale'   => Env::get('APP_LOCALE', 'en'),
+      'trusted_proxies' => array_filter(
+        array_map('trim', explode(',', env('APP_TRUSTED_PROXIES', '')))
+    ),
 ];

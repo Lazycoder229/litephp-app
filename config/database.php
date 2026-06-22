@@ -27,17 +27,23 @@ use Core\Config\Env;
  *   DB_USERNAME=root
  *   DB_PASSWORD=secret
  */
+
 return [
-    'default' => Env::get('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     'connections' => [
         'mysql' => [
-            'host'     => Env::get('DB_HOST', '127.0.0.1'),
-            'port'     => Env::get('DB_PORT', '3306'),
-            'database' => Env::get('DB_DATABASE'),
-            'username' => Env::get('DB_USERNAME'),
-            'password' => Env::get('DB_PASSWORD', ''),
-            'charset'  => Env::get('DB_CHARSET', 'utf8mb4'),
+            'driver'     => 'mysql',
+            'host'       => env('DB_HOST',     '127.0.0.1'),
+            'port'       => env('DB_PORT',     '3306'),
+            'database'   => env('DB_DATABASE', 'lite'),
+            'username'   => env('DB_USERNAME', 'root'),
+            'password'   => env('DB_PASSWORD', ''),
+            'charset'    => 'utf8mb4',
+            'prefix'     => '',
+            // SECURITY FIX: persistent connections are OFF by default to prevent
+            // connection pool exhaustion (DoS risk). Set to true only for CLI workers.
+            'persistent' => (bool) env('DB_PERSISTENT', false),
         ],
     ],
 ];

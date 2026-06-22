@@ -44,19 +44,7 @@ COPY . .
 
 COPY --from=frontend-builder /build/public/build ./public/build
 
-# Patch vendor helpers.php (after all COPYs so nothing overwrites it)
-RUN sed -i "s/env('VITE_DEV', 'true')/env('VITE_DEV', 'false')/" \
-        vendor/litephp/core/Core/helpers.php && \
-    sed -i \
-        "s|public_path('build/.vite/manifest.json')|'/var/www/html/public/build/.vite/manifest.json'|g" \
-        vendor/litephp/core/Core/helpers.php && \
-    sed -i \
-        "s|public_path('build/manifest.json')|'/var/www/html/public/build/manifest.json'|g" \
-        vendor/litephp/core/Core/helpers.php
-
-RUN rm -rf storage/cache/views/* && \
-    mkdir -p storage/framework/sessions storage/cache/views storage/logs storage/uploads && \
-    chown -R www-data:www-data /var/www/html && \
+RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 storage
 
 COPY docker-entrypoint.sh /usr/local/bin/
