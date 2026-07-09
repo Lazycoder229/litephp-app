@@ -1,0 +1,4 @@
+[2026-07-07 10:34 PM] INFO: Incoming request {"method":"GET","path":"\/"} → \app\Middleware\Global\LogRequestMiddleware.php:41
+[2026-07-07 10:35 PM] INFO: Incoming request {"method":"GET","path":"\/"} → \app\Middleware\Global\LogRequestMiddleware.php:41
+[2026-07-07 10:35 PM] INFO: Incoming request {"method":"GET","path":"\/"} → \app\Middleware\Global\LogRequestMiddleware.php:41
+[2026-07-07 10:37 PM] INFO: Incoming request {"method":"GET","path":"\/"} → \app\Middleware\Global\LogRequestMiddleware.php:41

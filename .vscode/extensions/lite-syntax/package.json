@@ -1,0 +1,24 @@
+{
+    "name": "lites-syntax",
+    "displayName": "Lites Template Syntax",
+    "description": "Syntax highlighting for Lites PHP template engine",
+    "version": "1.0.0",
+    "engines": { "vscode": "^1.60.0" },
+    "categories": ["Programming Languages"],
+    "contributes": {
+        "languages": [
+            {
+                "id": "lites",
+                "aliases": ["Lites", "lites"],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "lites",
+                "scopeName": "text.html.lites",
+                "path": "./syntaxes/lites.tmLanguage.json"
+            }
+        ]
+    }
+}

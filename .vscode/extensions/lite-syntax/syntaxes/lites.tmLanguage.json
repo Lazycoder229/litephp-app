@@ -1,0 +1,50 @@
+{
+    "name": "Lites",
+    "scopeName": "text.html.lites",
+    "patterns": [
+        { "include": "#lites_comments" },
+        { "include": "#lites_raw_echo" },
+        { "include": "#lites_escaped_echo" },
+        { "include": "#lites_directives" },
+        { "include": "text.html.basic" }
+    ],
+    "repository": {
+        "lites_comments": {
+            "name": "comment.block.lites",
+            "begin": "\\{\\{--",
+            "end": "--\\}\\}"
+        },
+        "lites_directives": {
+            "name": "keyword.control.lites",
+            "match": "@[a-zA-Z]+"
+        },
+        "lites_escaped_echo": {
+            "name": "meta.echo.escaped.lites",
+            "begin": "\\{\\{",
+            "end": "\\}\\}",
+            "beginCaptures": {
+                "0": { "name": "punctuation.definition.template-expression.begin.lites" }
+            },
+            "endCaptures": {
+                "0": { "name": "punctuation.definition.template-expression.end.lites" }
+            },
+            "patterns": [
+                { "include": "source.php#expressions" }
+            ]
+        },
+        "lites_raw_echo": {
+            "name": "meta.echo.raw.lites",
+            "begin": "\\{!!",
+            "end": "!!\\}",
+            "beginCaptures": {
+                "0": { "name": "punctuation.definition.template-expression.begin.lites" }
+            },
+            "endCaptures": {
+                "0": { "name": "punctuation.definition.template-expression.end.lites" }
+            },
+            "patterns": [
+                { "include": "source.php#expressions" }
+            ]
+        }
+    }
+}

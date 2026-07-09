@@ -1,0 +1,14 @@
+# Dependencies
+vendor/
+node_modules/
+
+# Environment
+.env
+
+# Generated files
+
+public/hot
+
+
+# OS files
+.DS_Store
