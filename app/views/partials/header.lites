@@ -1,0 +1,164 @@
+<?php if ($layout === 'centered-search'): ?>
+
+    <header class="sticky top-0 z-10 border-b px-6
+                   grid grid-cols-3 items-center h-[61px]
+                   <?= e($bgColor) ?> <?= e($borderColor) ?>">
+
+        {{-- LEFT: hamburger + title --}}
+        <div class="flex items-center gap-4 justify-self-start">
+            <button data-action="open-sidebar"
+                    class="md:hidden shrink-0 <?= e($titleColor) ?>">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <h1 class="text-base font-semibold shrink-0 <?= e($titleColor) ?>">
+                <?= e($pageTitle ?? '') ?>
+            </h1>
+        </div>
+
+        {{-- CENTER: search bar --}}
+        <div class="justify-self-center w-full max-w-sm">
+            @if(!empty($searchPlaceholder))
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+                    </svg>
+                    <input type="text"
+                           placeholder="<?= e($searchPlaceholder) ?>"
+                           class="w-full pl-9 pr-4 py-1.5 text-sm rounded-lg border border-gray-200
+                                  bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300
+                                  placeholder-gray-400">
+                </div>
+            @endif
+        </div>
+
+        {{-- RIGHT: flash messages + actions --}}
+        <div class="flex items-center gap-3 justify-self-end">
+            @if(!empty($flashSuccess))
+                <span class="text-sm text-green-500"><?= e($flashSuccess) ?></span>
+            @endif
+            @if(!empty($flashError))
+                <span class="text-sm text-red-500"><?= e($flashError) ?></span>
+            @endif
+
+            @if(!empty($actions))
+                @foreach($actions as $key => $value)
+                    <?php
+                        $name        = is_int($key) ? $value : $key;
+                        $actionValue = is_int($key) ? null : $value;
+                       $class = 'Core\\View\\Components\\HeaderActions\\' . ucfirst($name);
+                    ?>
+                    <?= new $class($actionValue, $theme) ?>
+                @endforeach
+            @endif
+        </div>
+
+    </header>
+
+<?php elseif ($layout === 'left-search'): ?>
+
+    <header class="sticky top-0 z-10 border-b px-6
+                   flex items-center gap-4 h-[61px]
+                   <?= e($bgColor) ?> <?= e($borderColor) ?>">
+
+        <button data-action="open-sidebar"
+                class="md:hidden shrink-0 <?= e($titleColor) ?>">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <h1 class="text-base font-semibold shrink-0 <?= e($titleColor) ?>">
+            <?= e($pageTitle ?? '') ?>
+        </h1>
+
+        @if(!empty($searchPlaceholder))
+            <div class="flex-1 max-w-sm">
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+                    </svg>
+                    <input type="text"
+                           placeholder="<?= e($searchPlaceholder) ?>"
+                           class="w-full pl-9 pr-4 py-1.5 text-sm rounded-lg border border-gray-200
+                                  bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300
+                                  placeholder-gray-400">
+                </div>
+            </div>
+        @else
+            <div class="flex-1"></div>
+        @endif
+
+        @if(!empty($flashSuccess))
+            <span class="text-sm text-green-500"><?= e($flashSuccess) ?></span>
+        @endif
+        @if(!empty($flashError))
+            <span class="text-sm text-red-500"><?= e($flashError) ?></span>
+        @endif
+
+        @if(!empty($actions))
+            <div class="flex items-center gap-3 shrink-0">
+                @foreach($actions as $key => $value)
+                    <?php
+                        $name        = is_int($key) ? $value : $key;
+                        $actionValue = is_int($key) ? null : $value;
+                       $class = 'Core\\View\\Components\\HeaderActions\\' . ucfirst($name);
+                    ?>
+                    <?= new $class($actionValue, $theme) ?>
+                @endforeach
+            </div>
+        @endif
+
+    </header>
+
+<?php elseif ($layout === 'no-search'): ?>
+
+    <header class="sticky top-0 z-10 border-b px-6
+                   flex items-center justify-between h-[61px]
+                   <?= e($bgColor) ?> <?= e($borderColor) ?>">
+
+        <div class="flex items-center gap-4">
+            <button data-action="open-sidebar"
+                    class="md:hidden shrink-0 <?= e($titleColor) ?>">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <h1 class="text-base font-semibold shrink-0 <?= e($titleColor) ?>">
+                <?= e($pageTitle ?? '') ?>
+            </h1>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+            @if(!empty($flashSuccess))
+                <span class="text-sm text-green-500"><?= e($flashSuccess) ?></span>
+            @endif
+            @if(!empty($flashError))
+                <span class="text-sm text-red-500"><?= e($flashError) ?></span>
+            @endif
+
+            @if(!empty($actions))
+                @foreach($actions as $key => $value)
+                    <?php
+                        $name        = is_int($key) ? $value : $key;
+                        $actionValue = is_int($key) ? null : $value;
+                       $class = 'Core\\View\\Components\\HeaderActions\\' . ucfirst($name);
+                    ?>
+                    <?= new $class($actionValue, $theme) ?>
+                @endforeach
+            @endif
+        </div>
+
+    </header>
+
+<?php endif; ?>

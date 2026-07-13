@@ -1,0 +1,102 @@
+<?php
+use Core\View\Components\Sidebar; 
+use Core\View\Components\Header;  
+
+// ── Theme resolver ──────────────────────────────────────────
+$themeMap = [
+    'light' => [
+        'mainBg'               => 'bg-zinc-50',
+        'bodyText'             => 'text-zinc-900',
+
+        'sidebarBg'            => 'bg-white',
+        'sidebarBorder'        => 'border-zinc-200',
+        'sidebarBrandColor'    => 'text-zinc-900',
+        'sidebarActiveColor'   => 'block text-zinc-900 font-semibold',
+        'sidebarInactiveColor' => 'block text-zinc-500 hover:text-zinc-900 transition-colors',
+
+        'headerBg'             => 'bg-white',
+        'headerBorder'         => 'border-zinc-200',
+        'headerTitleColor'     => 'text-zinc-900',
+    ],
+    'dark' => [
+        'mainBg'               => 'bg-zinc-950',
+        'bodyText'             => 'text-zinc-100',
+
+        'sidebarBg'            => 'bg-zinc-900',
+        'sidebarBorder'        => 'border-zinc-800',
+        'sidebarBrandColor'    => 'text-zinc-100',
+        'sidebarActiveColor'   => 'block text-zinc-100 font-semibold',
+        'sidebarInactiveColor' => 'block text-zinc-400 hover:text-zinc-100 transition-colors',
+
+        'headerBg'             => 'bg-zinc-900',
+        'headerBorder'         => 'border-zinc-800',
+        'headerTitleColor'     => 'text-zinc-100',
+    ],
+];
+
+$resolvedTheme = $themeMap[$theme ?? 'light'] ?? $themeMap['light'];
+
+// ── Page title resolver ─────────────────────────────────────
+// Kung walang explicit na pageTitle, hanapin ang PINAKA-SPECIFIC
+// na navLink na tumutugma (hindi basta unang mahanap), dahil ang
+// '/' ay laging "matches" sa lahat ng paths.
+if (empty($pageTitle)) {
+    $activeLink = null;
+
+    foreach ($navLinks ?? [] as $link) {
+        if (is_active($link['href']) !== '') {
+            if ($activeLink === null || strlen($link['href']) > strlen($activeLink['href'])) {
+                $activeLink = $link;
+            }
+        }
+    }
+
+    if ($activeLink !== null) {
+        $pageTitle = $activeLink['label'];
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><?= $this->sections['title'] ?? '' ?></title>
+    <style>body { opacity: 0; }</style>
+    <?= $this->sections['styles'] ?? '' ?>
+    <?= vite(['resources/css/app.css', 'resources/js/app.js']) ?>
+</head>
+<body class="<?= $resolvedTheme['mainBg'] ?> <?= $resolvedTheme['bodyText'] ?>">
+    <?= (new Sidebar(
+        navLinks: $navLinks ?? [],
+        bgColor: $sidebarBg ?? $resolvedTheme['sidebarBg'],
+        borderColor: $sidebarBorder ?? $resolvedTheme['sidebarBorder'],
+        brandTextColor: $sidebarBrandColor ?? $resolvedTheme['sidebarBrandColor'],
+        activeColor: $sidebarActiveColor ?? $resolvedTheme['sidebarActiveColor'],
+        inactiveColor: $sidebarInactiveColor ?? $resolvedTheme['sidebarInactiveColor'],
+        theme: $theme ?? 'light',
+    )) ?>
+
+  <div class="md:ml-64 flex flex-col min-h-screen <?= $resolvedTheme['mainBg'] ?>">
+
+     <?= (new Header(
+        pageTitle: $pageTitle ?? null,
+        actions: $headerActions ?? [],
+        searchPlaceholder: $headerSearch ?? null,
+        bgColor: $headerBg ?? $resolvedTheme['headerBg'],
+        borderColor: $headerBorder ?? $resolvedTheme['headerBorder'],
+        titleColor: $headerTitleColor ?? $resolvedTheme['headerTitleColor'],
+        layout: $headerLayout ?? 'centered-search',
+        theme: $theme ?? 'light',
+    )) ?>
+        <main class="flex-1 p-6">
+            <?= $this->sections['content'] ?? '' ?>
+        </main>
+
+    </div>
+
+    <?= $this->sections['scripts'] ?? '' ?>
+
+</body>
+</html>
